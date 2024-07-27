@@ -1,23 +1,8 @@
 use core::fmt;
 use std::str::FromStr;
 
+use super::verify_input_file;
 use clap::Parser;
-
-#[derive(Debug, Parser)]
-#[command(name = "rcli", version, author, about, long_about = None)]
-pub struct Opts {
-    #[command(subcommand)]
-    pub cmd: Subcommand,
-}
-
-#[derive(Debug, Parser)]
-pub enum Subcommand {
-    #[command(name = "csv", about = "Show CSV, or convert CSV to other formats")]
-    Csv(CsvOpts),
-
-    #[command(name = "genpass", about = "Generate a random password")]
-    GenPass(GenPassOpts),
-}
 
 #[derive(Debug, Parser)]
 pub struct CsvOpts {
@@ -42,14 +27,6 @@ pub struct CsvOpts {
 pub enum OutputFormat {
     Json,
     Yaml,
-}
-
-fn verify_input_file(filename: &str) -> Result<String, &'static str> {
-    if std::path::Path::new(filename).exists() {
-        Ok(filename.into())
-    } else {
-        Err("File does not exists")
-    }
 }
 
 fn parser_format(format: &str) -> Result<OutputFormat, anyhow::Error> {
@@ -81,22 +58,4 @@ impl fmt::Display for OutputFormat {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", Into::<&str>::into(*self))
     }
-}
-
-#[derive(Debug, Parser)]
-pub struct GenPassOpts {
-    #[arg(short, long, default_value_t = 16)]
-    pub length: u8,
-
-    #[arg(long, default_value_t = true)]
-    pub uppercase: bool,
-
-    #[arg(long, default_value_t = true)]
-    pub lowercase: bool,
-
-    #[arg(long, default_value_t = true)]
-    pub number: bool,
-
-    #[arg(long, default_value_t = true)]
-    pub symbol: bool,
 }

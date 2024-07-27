@@ -2,7 +2,7 @@ use csv::Reader;
 use serde::{Deserialize, Serialize};
 use std::fs;
 
-use crate::opts::OutputFormat;
+use crate::cli::OutputFormat;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Player {
