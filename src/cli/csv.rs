@@ -1,12 +1,12 @@
 use core::fmt;
 use std::str::FromStr;
 
-use super::verify_input_file;
+use super::verify_file;
 use clap::Parser;
 
 #[derive(Debug, Parser)]
 pub struct CsvOpts {
-    #[arg(short, long, value_parser = verify_input_file)]
+    #[arg(short, long, value_parser = verify_file)]
     pub input: String,
 
     #[arg(short, long)]
