@@ -1,0 +1,5 @@
+### Test static file
+GET http://localhost:8080/Cargo.toml
+
+### Test static directory
+GET http://localhost:8080/assets
